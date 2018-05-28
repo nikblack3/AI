@@ -1,0 +1,20 @@
+PacPos = currentGameState.getPacmanPosition()
+    Food = currentGameState.getFood()
+    GhostStates = currentGameState.getGhostStates()
+    scared_time = 0
+    food_list = Food.asList()
+    distance_ghost = 0
+    distance_ghost_list = []
+    for ghost in GhostStates:
+        distance_ghost += manhattanDistance(PacPos, ghost.getPosition())
+        distance_ghost_list.append(manhattanDistance(PacPos, ghost.getPosition()))
+        scared_time += ghost.scaredTimer
+    distance_food_sum = 0
+    distance_food_list = []
+    for food in food_list:
+        distance_food_sum += manhattanDistance(PacPos, food)
+        distance_food_list.append(manhattanDistance(PacPos, food))
+    if len(food_list) != 0:
+        return distance_ghost + (float(1 / 4) * scared_time) - len(food_list) - float(1 / 4) * min(distance_food_list)
+    else:
+        return distance_ghost + (float(1 / 4) * scared_time) - len(food_list)
